@@ -1,0 +1,19 @@
+@use "../../scssVariables/variables" as *;
+@import "../comment/comment.component.scss";
+
+.reply {
+  max-width: 60rem;
+  position: relative;
+  margin-left: 10rem;
+  &::before {
+    content: "";
+    border-left: 2px solid $lighterGrey;
+    position: absolute;
+    height: 100%;
+    left: -6rem;
+  }
+  .replyingTo {
+    font-weight: 500;
+    color: $moderateBlue;
+  }
+}

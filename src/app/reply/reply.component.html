@@ -1,0 +1,50 @@
+<div class="reply">
+    <div *ngFor="let reply of comment.replies; index as i" id="comment{{comment.id}}_reply{{reply.id}}">
+        <div class="comment">
+            <div class="comment__rate">
+                <button (click)="increase(reply.score, reply, data)"> <img src="../../assets/images/icon-plus.svg"
+                        alt="plus"> </button>
+                <div>{{reply.score}}</div>
+                <button (click)="decrease(reply.score, reply, data)"> <img src="../../assets/images/icon-minus.svg"
+                        alt="minus"> </button>
+            </div>
+            <div class="comment__content">
+                <div class="content-header">
+                    <div class="content-header__info">
+                        <img src="assets{{reply.user.image.png}}" alt="avatar">
+                        <p class="name">{{reply.user.username}}</p>
+                        <p *ngIf="reply.user.username === data.currentUser.username" class="yourIdentifier">you</p>
+                        <p class="time">{{reply.createdAt}}</p>
+                    </div>
+                    <button (click)="toggleReplyWindow(i)"
+                        *ngIf="reply.user.username !== data.currentUser.username; else editDelete"
+                        class="reply-btn"><img src="../../assets/images/icon-reply.svg" alt="reply"> Reply</button>
+
+                </div>
+                <p *ngIf="!toggleEdit[i] || reply.user.username !== data.currentUser.username; else editTextArea"
+                    class="comment-text">
+                    <span *ngIf="reply.replyingTo" class="replyingTo">@{{reply.replyingTo}} </span>{{reply.content}}
+                </p>
+            </div>
+        </div>
+        <app-reply-window [visible]="display[i]" *ngIf="display[i]" [data]="data" [reply]="reply"></app-reply-window>
+
+        <ng-template #editDelete>
+
+            <div class="editDelete">
+                <button (click)="modalWindowFromReply(); sendreplyToComment(reply)" class="deleteBtn"><img
+                        src="../../assets/images/icon-delete.svg" alt="delete">
+                    Delete</button>
+                <button (click)="editComment(i)" class="editBtn"><img src="../../assets/images/icon-edit.svg"
+                        alt="edit">
+                    Edit</button>
+            </div>
+        </ng-template>
+
+        <ng-template #editTextArea>
+            <textarea [(ngModel)]="typedText" [ngModel]="oldText(reply)" class="editTextArea"
+                name="updateReply">@{{reply.replyingTo}} {{reply.content}}</textarea>
+            <button (click)="updateReply(reply,i)" class="updateBtn">UPDATE</button>
+        </ng-template>
+    </div>
+</div>

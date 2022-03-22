@@ -1,0 +1,58 @@
+<ng-container *ngFor="let comment of data.comments; index as i">
+    <div class="comment" id="comment{{comment.id}}">
+        <div class="comment__rate">
+            <button (click)="increase(comment.score, comment, data)"> <img src="../../assets/images/icon-plus.svg"
+                    alt="plus">
+            </button>
+            <div>{{comment.score}}</div>
+            <button (click)="decrease(comment.score, comment, data)"> <img src="../../assets/images/icon-minus.svg"
+                    alt="minus">
+            </button>
+        </div>
+        <div class="comment__content">
+            <div class="content-header">
+                <div class="content-header__info">
+                    <img src="assets{{comment.user.image.png}}" alt="avatar">
+                    <p class="name">{{comment.user.username}}</p>
+                    <p *ngIf="comment.user.username === data.currentUser.username" class="yourIdentifier">you</p>
+                    <p class="time">{{comment.createdAt}}</p>
+                </div>
+                <button (click)="toggleReplyWindow(i)"
+                    *ngIf="comment.user.username !== data.currentUser.username; else editDelete" class="reply-btn"><img
+                        src="../../assets/images/icon-reply.svg" alt="reply"> Reply</button>
+            </div>
+            <p *ngIf="!toggleEdit[i] || comment.user.username !== data.currentUser.username; else editTextArea"
+                class="comment-text">
+                {{comment.content}}</p>
+        </div>
+    </div>
+
+
+    <app-reply-window [visible]="display[i]" *ngIf="display[i]" [data]="data" [comment]="comment">
+    </app-reply-window>
+
+
+
+    <div *ngIf="comment.replies.length" class="reply">
+        <app-reply (replyToComment)="passReplyToApp($event)" (modalStatetoCommentComp)="passToAppComp($event)"
+            [data]="data" [comment]="comment"></app-reply>
+    </div>
+
+    <ng-template #editTextArea>
+
+        <textarea [(ngModel)]="typedText" [ngModel]="oldText(comment)" class="editTextArea"
+            name="updateReply">{{comment.content}}</textarea>
+        <button (click)="updateComment(comment,i)" class="updateBtn">UPDATE</button>
+    </ng-template>
+
+
+    <ng-template #editDelete>
+        <div class="editDelete">
+            <button (click)="modalWindowFromComment(); getComment(comment)" class="deleteBtn"><img
+                    src="../../assets/images/icon-delete.svg" alt="delete">
+                Delete</button>
+            <button (click)="editComment(i)" class="editBtn"><img src="../../assets/images/icon-edit.svg" alt="edit">
+                Edit</button>
+        </div>
+    </ng-template>
+</ng-container>

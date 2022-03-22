@@ -1,0 +1,17 @@
+<div *ngIf="visible" class="mainUser">
+    <div *ngIf="comment; else forReply">
+        <img src="assets{{data.currentUser.image.png}}" alt="main user">
+        <textarea [(ngModel)]="typedText" [ngModel]="toWhomMainCom()" name="mainComment" class="mainComment"></textarea>
+        <button (click)="replyToComment()">REPLY</button>
+    </div>
+</div>
+
+
+<ng-template #forReply>
+    <div *ngIf="visible">
+        <img src="assets{{data.currentUser.image.png}}" alt="main user">
+        <textarea [(ngModel)]="typedText" [ngModel]="toWhomReplyCom()" name="mainComment"
+            class="mainComment"></textarea>
+        <button (click)="replyToReply()">REPLY</button>
+    </div>
+</ng-template>
