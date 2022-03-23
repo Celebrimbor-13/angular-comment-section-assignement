@@ -8,7 +8,7 @@
 
 
 <ng-template #forReply>
-    <div *ngIf="visible">
+    <div>
         <img src="assets{{data.currentUser.image.png}}" alt="main user">
         <textarea [(ngModel)]="typedText" [ngModel]="toWhomReplyCom()" name="mainComment"
             class="mainComment"></textarea>
