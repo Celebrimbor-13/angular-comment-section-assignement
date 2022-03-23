@@ -1,4 +1,4 @@
-@use "../../scssVariables/variables" as *;
+@use "../../styles/abstracts/variables" as *;
 
 .comment {
   * {
@@ -22,7 +22,7 @@
   background-color: white;
   padding: 2rem;
   column-gap: 3rem;
-  margin: 0 0 3rem 0;
+  margin: 3rem 0;
 
   &__rate {
     grid-row: 1/2;

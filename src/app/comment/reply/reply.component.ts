@@ -1,14 +1,13 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Comment, Data, Reply } from 'src/interfaces/interface';
-import { DataService } from 'src/data.service';
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { Comment, Data, Reply } from "src/app/interfaces/data-interface";
+import { DataService } from "src/app/services/data.service";
 
 @Component({
-  selector: 'app-reply',
-  templateUrl: './reply.component.html',
-  styleUrls: ['./reply.component.scss'],
+  selector: "app-reply",
+  templateUrl: "./reply.component.html",
+  styleUrls: ["./reply.component.scss"],
 })
 export class ReplyComponent implements OnInit {
-  constructor(private dataService: DataService) {}
   @Input() comment!: Comment;
   @Input() data!: Data;
   @Input() reply!: Reply;
@@ -17,19 +16,20 @@ export class ReplyComponent implements OnInit {
 
   display: boolean[] = [];
   toggleEdit: boolean[] = [];
-
   increase = this.dataService.increase;
   decrease = this.dataService.decrease;
   storageData = this.dataService.saveToStorage;
-  typedText = '';
+  typedText = "";
+
+  constructor(private dataService: DataService) {}
 
   oldText(reply: Reply) {
-    return '@' + reply.replyingTo + ' ' + reply.content;
+    return "@" + reply.replyingTo + " " + reply.content;
   }
 
   updateReply(reply: Reply, i: number) {
-    let id = localStorage.getItem('id');
-    reply.content = this.typedText.split(' ').slice(1).join(' ');
+    let id = localStorage.getItem("id");
+    reply.content = this.typedText.split(" ").slice(1).join(" ");
     this.storageData(this.data, String(id));
     this.toggleEdit[i] = !this.toggleEdit[i];
   }

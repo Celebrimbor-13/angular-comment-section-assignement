@@ -14,7 +14,7 @@
                         <img src="assets{{reply.user.image.png}}" alt="avatar">
                         <p class="name">{{reply.user.username}}</p>
                         <p *ngIf="reply.user.username === data.currentUser.username" class="yourIdentifier">you</p>
-                        <p class="time">{{reply.createdAt}}</p>
+                        <p class="time">{{reply.createdAt| timestampTransform}}</p>
                     </div>
                     <button (click)="toggleReplyWindow(i)"
                         *ngIf="reply.user.username !== data.currentUser.username; else editDelete"

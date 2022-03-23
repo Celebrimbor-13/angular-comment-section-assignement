@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Comment, Data, Reply } from 'src/interfaces/interface';
-import { DataService } from 'src/data.service';
+import { Comment, Data, Reply } from 'src/app/interfaces/data-interface';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-reply-window',
@@ -8,15 +8,15 @@ import { DataService } from 'src/data.service';
   styleUrls: ['./reply-window.component.scss'],
 })
 export class ReplyWindowComponent implements OnInit {
-  constructor(private dataService: DataService) {}
   @Input() data!: Data;
   @Input() comment!: Comment;
   @Input() reply!: Reply;
   @Input() visible!: boolean;
 
   id = localStorage.getItem('id');
-
   storageData = this.dataService.saveToStorage;
+
+  constructor(private dataService: DataService) {}
 
   toWhomMainCom() {
     return '@' + this.comment.user.username + ' ';
@@ -34,7 +34,7 @@ export class ReplyWindowComponent implements OnInit {
     }
     let replyObj: Reply = {
       content: this.typedText.split(' ').slice(1).join(' '),
-      createdAt: '1 month ago',
+      createdAt: Date.now().toString(),
       id: Number(this.id),
       replyingTo: this.comment.user.username,
       score: 0,
@@ -58,9 +58,10 @@ export class ReplyWindowComponent implements OnInit {
     if (this.id) {
       this.id = (parseInt(this.id) + 1).toString();
     }
+
     let replyObj: Reply = {
       content: this.typedText.split(' ').slice(1).join(' '),
-      createdAt: '1 month ago',
+      createdAt: Date.now().toString(),
       id: Number(this.id),
       replyingTo: this.reply.user.username,
       score: 0,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/data.service';
-import { Data, Comment, Reply } from 'src/interfaces/interface';
+import { DataService } from 'src/app/services/data.service';
+import { Data, Comment, Reply } from 'src/app/interfaces/data-interface';
 import data from '../data.json';
 
 @Component({
@@ -9,16 +9,14 @@ import data from '../data.json';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private dataService: DataService) {}
-
   data: Data = this.dataService.getFromStorage();
   hidden = false;
   comment!: Comment;
   reply!: Reply;
-
   storageData = this.dataService.saveToStorage;
-
   typedText = '';
+
+  constructor(private dataService: DataService) {}
 
   show(notHidden: boolean) {
     this.hidden = notHidden;
@@ -60,7 +58,7 @@ export class AppComponent implements OnInit {
     }
     let replyObj: Comment = {
       content: this.typedText,
-      createdAt: '1 month ago',
+      createdAt: Date.now().toString(),
       id: Number(id),
       replies: [],
       score: 0,
@@ -78,6 +76,7 @@ export class AppComponent implements OnInit {
       this.storageData(this.data, String(id));
     }
   }
+
   ngOnInit(): void {
     if (!this.data) {
       this.data = data;

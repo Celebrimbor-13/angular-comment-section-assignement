@@ -1,5 +1,5 @@
-@use "../../scssVariables/variables" as *;
-@import "../comment/comment.component.scss";
+@use "../../../styles/abstracts/variables" as *;
+@import "../comment.component.scss";
 
 .reply {
   max-width: 60rem;

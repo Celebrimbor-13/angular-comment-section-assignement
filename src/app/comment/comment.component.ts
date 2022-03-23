@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Data, Comment, Reply } from 'src/interfaces/interface';
-import { DataService } from 'src/data.service';
+import { Data, Comment, Reply } from 'src/app/interfaces/data-interface';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-comment',
@@ -8,7 +8,6 @@ import { DataService } from 'src/data.service';
   styleUrls: ['./comment.component.scss'],
 })
 export class CommentComponent implements OnInit {
-  constructor(private dataService: DataService) {}
   @Input() data!: Data;
   @Output() modalStatetoParentFromComment: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() modalStatetoParentFromReply: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -17,12 +16,12 @@ export class CommentComponent implements OnInit {
 
   display: boolean[] = [];
   toggleEdit: boolean[] = [];
-
   increase = this.dataService.increase;
   decrease = this.dataService.decrease;
   storageData = this.dataService.saveToStorage;
-
   typedText = '';
+
+  constructor(private dataService: DataService) {}
 
   oldText(comment: Comment) {
     return comment.content;
